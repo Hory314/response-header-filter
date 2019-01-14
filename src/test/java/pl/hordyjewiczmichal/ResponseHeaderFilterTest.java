@@ -16,22 +16,23 @@ import java.io.IOException;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ResponseHeaderFilterTest
 {
     @Mock
-    HttpServletRequest req;
+    private HttpServletRequest req;
 
     @Mock
-    HttpServletResponse resp;
+    private HttpServletResponse resp;
 
     @Mock
-    FilterChain chain;
+    private FilterChain chain;
 
     @Mock
-    FilterConfig config;
+    private FilterConfig config;
 
     private ResponseHeaderFilter filter;
 
@@ -92,5 +93,6 @@ public class ResponseHeaderFilterTest
     public void destroyTest()
     {
         filter.destroy();
+        assertTrue(true);
     }
 }

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
+@SuppressWarnings("WeakerAccess")
 public class ResponseHeaderFilter implements Filter
 {
     private Map<String, List<String>> headers;
@@ -28,7 +29,7 @@ public class ResponseHeaderFilter implements Filter
 
             try
             {
-                if (headerValues.equals("")) throw new IllegalArgumentException();
+                if ("".equals(headerValues)) throw new IllegalArgumentException();
 
                 StringTokenizer st = new StringTokenizer(headerValues, "\n");
                 while (st.hasMoreTokens())
@@ -52,12 +53,8 @@ public class ResponseHeaderFilter implements Filter
         Set<String> headerNames = this.getHeaders().keySet();
 
         headerNames.forEach(headerName ->
-        {
-            this.getHeaders().get(headerName).forEach(val ->
-            {
-                response.addHeader(headerName, val);
-            });
-        });
+                this.getHeaders().get(headerName).forEach(val ->
+                        response.addHeader(headerName, val)));
 
         chain.doFilter(req, resp);
     }
@@ -65,6 +62,7 @@ public class ResponseHeaderFilter implements Filter
     @Override
     public void destroy()
     {
+        // nothing to clean up.
     }
 
     public Map<String, List<String>> getHeaders()
