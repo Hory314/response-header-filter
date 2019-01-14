@@ -15,10 +15,6 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
 
-    <build>
-        <finalName>response-header-filter</finalName>
-    </build>
-
     <dependencies>
         <!-- servlet -->
         <dependency>
@@ -45,4 +41,17 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+
+    <build>
+        <finalName>response-header-filter</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
