@@ -9,11 +9,14 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ResponseHeaderFilterTest
@@ -67,6 +70,22 @@ public class ResponseHeaderFilterTest
 
         // then
         assertEquals(expected, filter.getHeaders());
+    }
+
+    @Test
+    public void doFilterTest() throws ServletException, IOException
+    {
+        // given
+        initTest();
+
+        // when
+        filter.doFilter(req, resp, chain);
+
+        // then
+        Mockito.verify(resp, times(3)).addHeader(Mockito.any(), Mockito.any());
+        Mockito.verify(resp, times(1)).addHeader("x-header-1", "value1");
+        Mockito.verify(resp, times(1)).addHeader("x-header-1", "value2");
+        Mockito.verify(resp, times(1)).addHeader("x-header-2", "value3");
     }
 
     @Test
