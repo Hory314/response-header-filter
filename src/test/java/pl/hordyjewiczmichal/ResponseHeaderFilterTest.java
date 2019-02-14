@@ -55,16 +55,22 @@ public class ResponseHeaderFilterTest
         values = new ArrayList<>();
         values.add("value3");
         expected.put("x-header-2", values);
+        values = new ArrayList<>();
+        values.add("value4");
+        values.add("value5");
+        expected.put("x-header-4", values);
 
         // when
         Mockito.when(config.getInitParameter("x-header-1")).thenReturn("value1\n                value2");
         Mockito.when(config.getInitParameter("x-header-2")).thenReturn("value3");
         Mockito.when(config.getInitParameter("x-header-3")).thenReturn("");
+        Mockito.when(config.getInitParameter("x-header-4")).thenReturn("        value4\r\n                  value5");
 
         Vector<String> v = new Vector<>();
         v.add("x-header-1");
         v.add("x-header-2");
         v.add("x-header-3");
+        v.add("x-header-4");
         Mockito.when(config.getInitParameterNames()).thenReturn(v.elements());
 
         filter.init(config);
@@ -83,10 +89,12 @@ public class ResponseHeaderFilterTest
         filter.doFilter(req, resp, chain);
 
         // then
-        Mockito.verify(resp, times(3)).addHeader(Mockito.any(), Mockito.any());
+        Mockito.verify(resp, times(5)).addHeader(Mockito.any(), Mockito.any());
         Mockito.verify(resp, times(1)).addHeader("x-header-1", "value1");
         Mockito.verify(resp, times(1)).addHeader("x-header-1", "value2");
         Mockito.verify(resp, times(1)).addHeader("x-header-2", "value3");
+        Mockito.verify(resp, times(1)).addHeader("x-header-4", "value4");
+        Mockito.verify(resp, times(1)).addHeader("x-header-4", "value5");
     }
 
     @Test

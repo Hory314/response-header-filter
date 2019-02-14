@@ -31,10 +31,12 @@ public class ResponseHeaderFilter implements Filter
             {
                 if ("".equals(headerValues)) throw new IllegalArgumentException();
 
-                StringTokenizer st = new StringTokenizer(headerValues, "\n");
+                StringTokenizer st = new StringTokenizer(headerValues, "\r\n");
                 while (st.hasMoreTokens())
                 {
-                    values.add(st.nextToken().trim());
+                    String nextValue = st.nextToken().trim();
+                    if("".equals(nextValue)) continue;
+                    values.add(nextValue);
                 }
             }
             catch (NullPointerException | IllegalArgumentException e)
