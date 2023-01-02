@@ -17,6 +17,8 @@ Add custom headers easily to your Tomcat response using param-name and param-val
                 your value2
                 your value3
             </param-value> <!-- put your header value(s) separated by a new line  -->
+        </init-param>
+        <init-param>
             <param-name>Your-Header-2</param-name>
             <param-value>some other value</param-value>
         </init-param>
